@@ -1,8 +1,8 @@
 #include "shell.h"
 /**
- * change - executing command with entire path variables.
- * data - a pointer to the program's data
- * return - On success, return zero, else, return -1.
+ * change - execute a command with its entire path variables.
+ * @data: a pointer to the program's data
+ * Return: If sucess returns zero, otherwise, return -1.
  */
 int change(program_data *data)
 {
