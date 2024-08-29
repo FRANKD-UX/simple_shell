@@ -9,25 +9,25 @@ void p_variables(program_data *data)
 	int x, y; /*Loop counters*/
 	char line[BUFFER_SIZE] = {0}, expansion[BUFFER_SIZE] = {'\0'}, *temp;
 
-	if (data->input_line == NULL) /* Check if input_line in 'data' is NULL, if so, return immediately*/
+	if (data->input_line == NULL)
 		return;
-	buffer_p(line, data->input_line); /* Process the input_line and store the result in 'line'*/
-	for (x = 0; line[x]; x++) /* Iterate through each character in 'line*/
-		if (line[x] == '#') /* If a '#' character is found, truncate the string at this point*/
-			line[x--] = '\0'; /* Replace '#' with null terminator and decrement 'x' to possibly handle consecutive '#'*/
-		else if (line[x] == '$' && line[x + 1] == '?') /* Replace '$' with null terminator to end the current part of the string*/
+	buffer_p(line, data->input_line);
+	for (x = 0; line[x]; x++)
+		if (line[x] == '#')
+			line[x--] = '\0';
+		else if (line[x] == '$' && line[x + 1] == '?')
 		{
 			line[x] = '\0';
-			int_to_string(errno, expansion, 10); /* Append the error code string to the current 'line'*/
-			buffer_ap(line, expansion); /* Append the remainder of the original input line starting from after "$?"*/
+			int_to_string(errno, expansion, 10);
+			buffer_ap(line, expansion);
 			buffer_p(line, data->input_line + x + 2);
 		}
 		else if (line[x] == '$' && line[x + 1] == '$')
 		{
 			line[x] = '\0';
-			int_to_string(getpid(), expansion, 10); /* Convert the process ID (pid) to a string and store in 'expansion'*/
-			buffer_p(line, expansion); /* Append the process ID string to the current 'line'*/
-			buffer_p(line, data->input_line + x + 2); /* Append the remainder of the original input line starting from after "$$"*/
+			int_to_string(getpid(), expansion, 10);
+			buffer_p(line, expansion);
+			buffer_p(line, data->input_line + x + 2);
 		}
 		else if (line[x] == '$' && (line[x + 1] == ' ' || line[x + 1] == '\0'))
 			continue;
@@ -48,11 +48,14 @@ void p_variables(program_data *data)
 	}
 }
 /**
- * Processes and expands aliases in the input line of 'data'.
- * This function takes the input line from 'data', processes it to check for any 
- * aliases, and replaces occurrences of aliases with their corresponding values. 
- * It then updates 'data->input_line' with the expanded result if any aliases were expanded.
- * @param data A pointer to a 'program_data' structure containing the input line to be processed.
+ * Processes and expands aliases in the
+ * input line of 'data'. This function takes the input line from
+ * 'data', processes it to check for any aliases, and replaces
+ * occurrences of aliases with their corresponding values. It then
+ * updates 'data->input_line' with the expanded result if any
+ * aliases were expanded.
+ * @data: A pointer to a 'program_data' structure containing
+ * the input line to be processed.
  */
 void p_alias(program_data *data)
 {
@@ -92,8 +95,9 @@ void p_alias(program_data *data)
 
 /**
  * buffer_add - append string at end of the buffer
- * @buffer: A pointer to the destination string where 'string_add' will be appended
- * @str_add: A pointer to the string that will be appended to 'buffer' * Return: The length of 'buffer' after the append operation..
+ * @buffer: A pointer to the destination string where 'string_add' appended
+ * @str_add: A pointer to the string that will be appended to 'buffer'
+ * return: The length of 'buffer' after the append operation..
  */
 int buffer_p(char *buffer, char *string_add)
 {

@@ -1,9 +1,10 @@
 #include "shell.h"
 /**
- * _strtok - uses delimiters to separate strings
+ * *_strtok - uses delimiters to separate strings
  * @line: A pointer to array received in fetch.
  * @del: Characters marked off in string parts.
- * return: Pointer to the token created
+ * return: A pointer to the beginning of the next token on success.
+ *Returns NULL if no more tokens are found or if the input string is empty.
 */
 char *_strtok(char *line, char *del)
 {
@@ -13,20 +14,20 @@ char *_strtok(char *line, char *del)
 
 	if (line != NULL)
 		str = line;
-	for (; *str != '\0'; str++) /* This loop will process each character in the string*/
+	for (; *str != '\0'; str++) /* loop process character in the string*/
 	{
-		for (y = 0; del[y] != '\0'; y++) /* Check if the current character pointed to by 'str' matches the delimiter at index 'y'*/
+		for (y = 0; del[y] != '\0'; y++)
 		{
 			if (*str == del[y])
 			break;
 		}
-		if (del[y] == '\0') /* If no matching delimiter is found (i.e., the end of 'delim' is reached), exit the outer loop.*/
+		if (del[y] == '\0')
 			break;
 	}
 	copystring = str;
 	if (*copystring == '\0')
 		return (NULL);
-	for (; *str != '\0'; str++) /* loop is used to traverse each character in the string pointed to by ‘str’*/
+	for (; *str != '\0'; str++)
 	{
 		for (y = 0; del[y] != '\0'; y++)
 		{

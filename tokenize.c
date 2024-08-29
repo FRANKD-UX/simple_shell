@@ -9,7 +9,8 @@ void tokenize(program_data *data) /*describes function’s purpose*/
 	char *d = " \t";
 	int x, y, counter = 2, l;
 
-	l = string_l(data->input_line); /* purpose of the line is to compute the length of the input_line and assign it to the variable ‘l’*/
+	l = string_l(data->input_line);
+	/* compute the l of the input_line and assigns to variable ‘l’*/
 	if (l)
 	{
 		if (data->input_line[l - 1] == '\n')
@@ -25,7 +26,8 @@ void tokenize(program_data *data) /*describes function’s purpose*/
 		}
 	}
 
-	data->tokens = malloc(counter * sizeof(char *)); /* used to allocate memory dynamically for an array of pointers to ‘char’*/
+	data->tokens = malloc(counter * sizeof(char *));
+	/*used to allocate memory dynamically for an array of pointers to ‘char’*/
 	if (data->tokens == NULL)
 	{
 		perror(data->program_name);
@@ -36,7 +38,8 @@ void tokenize(program_data *data) /*describes function’s purpose*/
 	data->command_name = string_d(data->tokens[0]);
 	while (data->tokens[x++])
 	{
-		data->tokens[x] = string_d(_strtok(NULL, d)); /* line is used to tokenize a segment of the input string and store the result in data->tokens[x]*/
+		data->tokens[x] = string_d(_strtok(NULL, d));
+		/* tokenize segment of input string and store the result*/
 	}
 }
 /*This code is by Frank Ndlovu and Nomcebo Mncina*/

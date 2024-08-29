@@ -1,7 +1,7 @@
 #ifndef H_HELPER
 #define H_HELPER
 #define BUFFER_SIZE 1024 /* buffer size for each call in  fetch */
-#define MSG_PROMPT "shell_101" /* A prompt to be printed that is needed to work with signal */
+#define MSG_PROMPT "shell_101" /* A prompt to be printed */
 #define UNUSED __attribute__((unused))
 
 #define HELP_CD_IN_MSG "cd=\n"\
@@ -26,19 +26,19 @@
 #define HELP_UNSET_ENV_MSG "unsetenv=\n"\
 "unsetenv:\tunsetenv VAR\n\n"\
 "	The function unsetenv deletes one variable from the environment.\n\n"\
-"	In the case where there are no correct numbers of arguments, print error message.\n\n"
+"	Case where there are no correct numbers of arguments, print error message.\n\n"
 
 #define HELP_SET_ENV_MSG "setenv=\n"\
 "setenv:\tsetenv VAR_VALUE\n\n"\
 "	Change or add an environment variable.\n\n"\
-"	Alternatively initialize a new environment variable, or modify an existing one\n"\
+"	Alternatively initialize new environment variabl,  modify an existing one\n"\
 "	In case of no correct numbers of arguments, print error message.\n\n"
 
 #define MSG_HELP "help=\n"\
 "help:\thelp [B_NAME]\n\n"\
 "	Display info about the builtin commands.\n\n"\
 "	Displays of builtin commands summaries.  \n"\
-"	If B_NAME is specified, gives detailed help on all commands matching BUILTIN_NAME,\n"\
+"	If B_NAME is specified, gives details on all commands matching B_NAME,\n"\
 "	else, list of help topics are printed as B_NAME list.\n"\
 "	Arguments:\n\n"\
 "	B_NAME specifies help topics.\n\n"\
