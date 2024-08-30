@@ -39,6 +39,7 @@ int print_a(program_data *data, char *alias)
 			}
 		}
 	}
+/**
 =======
 * Prints the aliases from the alias list,
 * or a specific alias if provided.This function
