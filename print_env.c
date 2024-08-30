@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "main.h"
 
 /* Declare the global variable `environ` */
 extern char **environ;
