@@ -11,9 +11,15 @@
  * @num_chars: Number of characters read
  * Return: The number of characters read, or -1 on error.
  */
+<<<<<<< HEAD
 static ssize_t read_input(char **lineptr, size_t *n, FILE * stream,
 	ssize_t *num_chars);
 static int handle_realloc(char **buffer, size_t *bufsize, ssize_t num_chars);
+=======
+static ssize_t read input(char **lineptr, size_t *n, FILE *stream,
+			ssize_t *num_chars)
+static int handle_realloc(char **buffer, size_t *bufsize, ssize_t num_chars)
+>>>>>>> 485ca7597b1fedc1ec4afad07eaa71b2f9714bc6
 ssize_t my_getline(char **lineptr, size_t *n, FILE *stream)
 {
 	ssize_t num_chars = 0;
