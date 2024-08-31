@@ -16,10 +16,11 @@ extern char **environ; /* Global environment variable array */
 int _setenv(const char *name, const char *value, int overwrite)
 {
 char **env;
+int size;
+char **new_environ;
 size_t name_len = strlen(name);
 size_t value_len = strlen(value);
 char *new_var;
-int found = 0;
 
 	if (name == NULL || *name == '\0' || value == NULL)
 	return (-1);
@@ -47,12 +48,12 @@ int found = 0;
 	}
 	}
 
-	int size;
+	size = 0;
 
 	for (size = 0; environ[size] != NULL; size++)
 	;
 
-	char **new_environ = realloc(environ, sizeof(char *) * (size + 2));
+	new_environ = realloc(environ, sizeof(char *) * (size + 2));
 
 	if (new_environ == NULL)
 	{
