@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "main.h"
 
 /**
  * main - prints the environment
@@ -7,10 +8,10 @@
  * @env: The array of environment variables.
  * Return: Always 0.
  */
-int main(char **env)
+int main (int ac, char **env)
 {
 	unsigned int i;
-
+	(void)ac;
 	i = 0;
 	while (env[i] != NULL)
 	{

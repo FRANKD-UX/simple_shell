@@ -8,8 +8,9 @@
  *
  * Return: Always 0.
  */
-int main(char **av)
+int main(int ac, char **av)
 {
+	(void)ac;
 	/* Loop through the array of arguments */
 	while (*av)
 	{

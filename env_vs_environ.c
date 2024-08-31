@@ -12,8 +12,9 @@ extern char **environ;
  *
  * Return: Always 0.
  */
-int main(char **env)
+int main(int ac, char **env)
 {
+	(void)ac;
     /* Print the address of the `env` parameter */
 	printf("Address of env (parameter): %p\n", (void *)env);
 

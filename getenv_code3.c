@@ -50,7 +50,7 @@ int main(void)
 	value = _getenv("HOME");
 	if (value)
 		printf("HOME: %s\n", value);
-	else
+		else
 		printf("HOME not found\n");
 
 		value = _getenv("PATH");
