@@ -2,6 +2,7 @@
 #define MY_GETLINE_H
 
 #include <stddef.h>
+#include <stdio.h>
 
 size_t my_getline(char **lineptr, size_t *n, FILE *stream);
 

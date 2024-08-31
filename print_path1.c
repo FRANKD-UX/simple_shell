@@ -87,6 +87,6 @@ void print_path_dirs(void)
  */
 int main(void)
 {
-	print_path_dirs();
-	return (0);
+print_path_dirs();
+return (0);
 }
