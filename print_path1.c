@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "maih.h"
+#include "main.h"
 
 /* Declare the global environment variable */
 extern char **environ;
@@ -15,6 +15,7 @@ extern char **environ;
 char *_getenv(const char *name)
 int main(void)
 {
+	(void)char *name;
 	char **env;
 	size_t len;
 
