@@ -8,12 +8,12 @@
 #define MAX_COMMAND_LENGTH 1024
 
 void execute_command(const char *command) {
-	pid_t pid, wpid;
+	pid_t pid;
 	int status;
 
 	/*Fork a child process*/
 	pid = fork();
-	if (pid == -1) {
+	if (pid == 0) {
 	perror("fork");
 	exit(EXIT_FAILURE);
 	}
