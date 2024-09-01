@@ -1,4 +1,9 @@
 #include <stdio.h>
+#include <string.h> /* Include for strlen() and strncmp() */
+#include <unistd.h> /* Include for environ */
+
+/* Declare the extern variable */
+extern char **environ;
 
 /**
  * _getenv - Retrieves the value of an environment variable
@@ -11,9 +16,6 @@ char *_getenv(const char *name)
 {
 	char **env;
 	size_t len;
-
-	/* Avoid unused parameter warning (if applicable) */
-	(void)name;
 
 	len = strlen(name);
 
