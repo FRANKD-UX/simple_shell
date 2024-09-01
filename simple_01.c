@@ -1,67 +1,66 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include <string.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>  /* Include this for EXIT_FAILURE */
 
-#define MAX_COMMAND_LENGTH 1024
-
-void execute_command(char *cmd, char *args[]) {
-	pid_t pid, wpid;
+/**
+ * execute_command - Executes a command using fork and execvp
+ * @cmd: The command to execute
+ * @args: The arguments for the command
+ *
+ * This function forks the process and then uses execvp to
+ * execute the specified command. It waits for the child
+ * process to finish before returning.
+ */
+void execute_command(char *cmd, char *args[])
+{
+	pid_t pid;
 	int status;
 
-	/*Fork a child process*/
 	pid = fork();
-	if (pid == 0) {
-	perror("fork");
-	exit(EXIT_FAILURE);
+	if (pid == 0)
+	{
+		/* Child process */
+		if (execvp(cmd, args) == -1)
+		{
+			perror("execvp failed");
+		}
+		_exit(EXIT_FAILURE);  /* Use EXIT_FAILURE */
 	}
-
-	if (pid == 0) { /*Child process*/
-        /*Execute the command*/
-	execlp(command, command, (char *)NULL);
-        /*If execlp returns, it must have failed*/
-	perror("execlp");
-	exit(EXIT_FAILURE);
-	} else { /*Parent process*/
-        /*Wait for the child process to finish*/
-	do {
-	wpid = waitpid(pid, &status, WNOHANG);
-	} while (!WIFEXITED(status) && !WIFSIGNALED(status));
+	else if (pid < 0)
+	{
+		/* Forking error */
+		perror("fork failed");
+	}
+	else
+	{
+		/* Parent process */
+		do {
+			if (waitpid(pid, &status, WNOHANG) == -1)
+			{
+				perror("waitpid failed");
+				break;
+			}
+		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
 	}
 }
 
-int main() {
-	char command[MAX_COMMAND_LENGTH];
-    
-	while (1) {
-        /*Display the prompt*/
-	printf("simple_shell> ");
-	fflush(stdout);
+/**
+ * main - Entry point of the program
+ *
+ * This function sets up a command and its arguments, and
+ * then calls execute_command to run the command.
+ *
+ * Return: Always 0 (Success)
+ */
+int main(void)
+{
+	char *command = "ls";
+	char *args[] = {"ls", "-l", NULL};
 
-        /*Read a command from the user*/
-	if (fgets(command, sizeof(command), stdin) == NULL) {
-	if (feof(stdin)) { /*End of file (Ctrl+D)*/
-		printf("\n");
-	break;
-	} else {
-		perror("fgets");
-		continue;
-	}
-	}
+	execute_command(command, args);
 
-        /*Remove the newline character at the end of the command*/
-	command[strcspn(command, "\n")] = '\0';
-
-        /*If the command is empty, continue to the next iteration*/
-	if (strlen(command) == 0) {
-		continue;
-	}
-
-        /*Execute the command*/
-	execute_command(command);
-	}
-
-	return 0;
+	return (0);
 }
+
