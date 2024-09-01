@@ -1,12 +1,6 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-/* Standard Library Includes */
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
-
 /* Macros and Constants */
 #define BUFFER_SIZE 1024
 
@@ -36,10 +30,17 @@ int env_main(int ac, char **av, char **env);
 /* env_vs_environ.c */
 int env_vs_environ(int ac, char **av, char **env);
 
-/* Add additional function prototypes as needed */
+/* Function prototypes */
+char *_getenv(const char *name);
 
-/* Optional: External Variables */
-/* extern char **environ; */  /* Uncomment if using the globl environ vrible */
+/**
+ * print_env - Prints the current environment variables.
+ *
+ * Return: 0 on success, or another integer if an error occurs.
+ */
+int print_env(void);
+
+extern char **environ; /* Declare the extern variable */
 
 #endif /* MAIN_H */
 
