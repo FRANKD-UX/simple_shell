@@ -16,8 +16,6 @@ static ssize_t read_input(char **lineptr, size_t *n, FILE * stream,
 	ssize_t *num_chars);
 static int handle_realloc(char **buffer, size_t *bufsize, ssize_t num_chars);
 
-static ssize_t read input(char **lineptr, size_t *n, FILE *stream,
-			ssize_t *num_chars)
 static int handle_realloc(char **buffer, size_t *bufsize, ssize_t num_chars)
 
 ssize_t my_getline(char **lineptr, size_t *n, FILE *stream)
