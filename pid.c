@@ -3,15 +3,39 @@
 #include "main.h"
 
 /**
- * main - PID
+ * print_pid - Prints the process ID and parent process ID.
  *
- * Return: Always 0.
+ * Return: void
  */
-int main(void)
+void print_pid(void)
 {
-	pid_t my_pid;
+	pid_t pid;
+	pid_t ppid;
 
-	my_pid = getpid();
-	printf("%u\n", my_pid);
-	return (0);
+	pid = getpid();
+	ppid = getppid();
+
+	printf("Process ID: %d\n", pid);
+	printf("Parent Process ID: %d\n", ppid);
 }
+
+/**
+ * fork_and_print_pid - Forks a process and prints process IDs.
+ *
+ * Return: void
+ */
+void fork_and_print_pid(void)
+{
+	pid_t pid;
+
+	printf("Before fork\n");
+	pid = fork();
+	if (pid == -1)
+	{
+		perror("Error:");
+		return;
+	}
+	printf("After fork\n");
+	print_pid();
+}
+
