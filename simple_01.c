@@ -7,8 +7,8 @@
 
 #define MAX_COMMAND_LENGTH 1024
 
-void execute_command(const char *command) {
-	pid_t pid;
+void execute_command(char *cmd, char *args[]) {
+	pid_t pid, wpid;
 	int status;
 
 	/*Fork a child process*/
