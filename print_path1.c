@@ -12,13 +12,13 @@ extern char **environ;
  *
  * Return: The value of the environment variable if found, otherwise NULL.
  */
-char *_getenv(const char *name)
+char *_getenv(const char *name);
 int main(void);
 {
-	(void)char *name;
-	char **env;
-	size_t len;
-
+(void)char *name;
+char **env;
+size_t len;
+	
 	if (name == NULL || *name == '\0')
 	return (NULL);
 
@@ -35,6 +35,7 @@ int main(void);
 	}
 
 	return (NULL); /* Return NULL if variable is not found */
+
 }
 
 /**
