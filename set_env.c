@@ -66,24 +66,3 @@ char *new_var;
 
 	return (0);
 }
-
-/**
- * main - Entry point to test the _setenv function
- * Return: Always 0.
- */
-int main(void)
-{
-	const char *name = "MY_VAR";
-	const char *value = "my_value";
-
-	if (_setenv(name, value, 1) == 0)
-	{
-	printf("Environment variable '%s' set to '%s'.\n", name, getenv(name));
-	}
-	else
-	{
-	printf("Failed to set environment variable '%s'.\n", name);
-	}
-
-	return (0);
-}

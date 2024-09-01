@@ -45,22 +45,3 @@ void execute_command(char *cmd, char *args[])
 		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
 	}
 }
-
-/**
- * main - Entry point of the program
- *
- * This function sets up a command and its arguments, and
- * then calls execute_command to run the command.
- *
- * Return: Always 0 (Success)
- */
-int main(void)
-{
-	char *command = "ls";
-	char *args[] = {"ls", "-l", NULL};
-
-	execute_command(command, args);
-
-	return (0);
-}
-
