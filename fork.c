@@ -3,24 +3,24 @@
 #include "main.h"
 
 /**
- * main - fork example
+ * fork_example - fork example function
  *
  * Return: Always 0.
  */
-int main(void)
+void fork_example(void)
 {
 	pid_t my_pid;
 	pid_t pid;
 
 	printf("Before fork\n");
 	pid = fork();
-if (pid == -1)
-{
-	perror("Error:");
-	return (1);
-}
+	if (pid == -1)
+	{
+		perror("Error:");
+		return;
+	}
 	printf("After fork\n");
 	my_pid = getpid();
 	printf("My pid is %u\n", my_pid);
-	return (0);
 }
+

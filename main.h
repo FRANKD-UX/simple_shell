@@ -1,6 +1,9 @@
 #ifndef MAIN_H
 #define MAIN_H
 
+#include <stddef.h>  /* For size_t and NULL */
+#include <stdio.h>   /* For FILE */
+
 /* Macros and Constants */
 #define BUFFER_SIZE 1024
 
@@ -41,6 +44,9 @@ char *_getenv(const char *name);
 int print_env(void);
 
 extern char **environ; /* Declare the extern variable */
+extern char **environ; /* Declare the global environment variable */
 
+/* Function prototypes */
+char *_getenv(const char *name);
 #endif /* MAIN_H */
 

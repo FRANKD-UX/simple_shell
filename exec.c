@@ -3,11 +3,11 @@
 #include "main.h"
 
 /**
- * main - execve example
+ * run_ls - Executes the `ls -l /usr/` command using execve
  *
- * Return: Always 0.
+ * Return: Nothing
  */
-int main(void)
+void run_ls(void)
 {
 	char *argv[] = {"/bin/ls", "-l", "/usr/", NULL};
 
@@ -17,6 +17,5 @@ int main(void)
 		perror("Error:");
 	}
 	printf("After execve\n");
-	return (0);
 }
 

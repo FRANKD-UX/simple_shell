@@ -1,22 +1,26 @@
-#include <stdio.h>
 #include "main.h"
 
 /**
- * main - prints the environment
- * @ac: The number of command-line arguments (not used).
- * @av: The array of command-line arguments (not used).
- * @env: The array of environment variables.
+ * main - Entry point of the shell program
+ *
+ * Return: Always 0 (Success)
+ */
+int main(void)
+{
+	/* Your main code here */
+	return (0);
+}
+
+/* Function prototype for run_ls */
+void run_ls(void);
+
+/**
+ * main - Entry point for testing the run_ls function
+ *
  * Return: Always 0.
  */
-int main (int ac, char **env)
+int main(void)
 {
-	unsigned int i;
-	(void)ac;
-	i = 0;
-	while (env[i] != NULL)
-	{
-	printf("%s\n", env[i]);
-	i++;
-	}
+	run_ls();
 	return (0);
 }
