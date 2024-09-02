@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-=======
->>>>>>> c64403caa714f45e9ab0372a5968a8ff1054a3f5
 #include <unistd.h>
 #include <string.h>
 #include <stdlib.h>  /* For realloc */
