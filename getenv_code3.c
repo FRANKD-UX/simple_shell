@@ -1,7 +1,13 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-
+/**
+ * _getenv - Retrieves the value of an environment variable.
+ * @name: The name of the environment variable to find.
+ *
+ * Return: A pointer to the value of the envirnment varible,
+ * or NULL if not found.
+ */
 char *_getenv(const char *name)
 {
 	char **env;
