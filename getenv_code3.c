@@ -34,4 +34,9 @@ char *_getenv(const char *name)
 
 	return (NULL); /* Return NULL if variable is not found */
 }
+#include "main.h"
 
+char *_getenv(const char *name)
+{
+    /* Function implementation */
+}
