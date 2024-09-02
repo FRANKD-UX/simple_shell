@@ -6,7 +6,9 @@
  * @name: The name of the environment variable
  *
  * Return: The value of the environment variable if found, NULL otherwise
- */
+*/
+extern char **environ;
+
 char *_getenv(const char *name)
 {
 	char **env = environ;  /* Assuming 'environ' is declared globally */
