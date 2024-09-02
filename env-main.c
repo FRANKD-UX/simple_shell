@@ -1,26 +1,25 @@
-#include "main.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include "main.h" // Make sure to include the header file where necessary
 
-/**
- * main - Entry point of the shell program
- *
- * Return: Always 0 (Success)
- */
+// Function prototypes if needed
+void some_function(void);
+
+// Main function
 int main(void)
 {
-	/* Your main code here */
-	return (0);
+    // Your implementation here
+    printf("Hello from main!\n");
+    
+    // Call other functions if needed
+    some_function();
+    
+    return 0;
 }
 
-/* Function prototype for run_ls */
-void run_ls(void);
-
-/**
- * main - Entry point for testing the run_ls function
- *
- * Return: Always 0.
- */
-int main(void)
+// Example additional function
+void some_function(void)
 {
-	run_ls();
-	return (0);
+    printf("This is an additional function.\n");
 }
+

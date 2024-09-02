@@ -1,42 +1,33 @@
-#include <stdio.h>
+#include "main.h"
 #include <stdlib.h>
 #include <string.h>
-#include "main.h"
-
-/* Function prototype for _getenv */
-char *_getenv(const char *name);
 
 /**
- * _getenv - Gets the value of an environment variable.
- * @name: The name of the environment variable.
+ * _getenv - Retrieve the value of an environment variable
+ * @name: The name of the environment variable
  *
- * Return: The value of the environment variable if found, NULL otherwise.
+ * Return: The value of the environment variable or NULL if not found
  */
 char *_getenv(const char *name)
 {
 	char **env;
-	size_t len;
+	size_t name_len;
 
 	if (name == NULL || *name == '\0')
+	{
 		return (NULL);
+	}
 
-	len = strlen(name);
+	name_len = strlen(name);
 
-	/* Iterate through the environment variables */
 	for (env = environ; *env != NULL; env++)
 	{
-		/* Check if the current environment variable starts with `name=` */
-		if (strncmp(*env, name, len) == 0 && (*env)[len] == '=')
+		if (strncmp(*env, name, name_len) == 0 && (*env)[name_len] == '=')
 		{
-			return (*env + len + 1); /* Return pointer to the value */
+			return (&(*env)[name_len + 1]);
 		}
 	}
 
-	return (NULL); /* Return NULL if variable is not found */
+	return (NULL);
 }
-#include "main.h"
 
-char *_getenv(const char *name)
-{
-    /* Function implementation */
-}
