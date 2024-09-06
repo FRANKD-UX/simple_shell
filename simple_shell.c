@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 /**
  * main - Entry point of the shell.
@@ -11,7 +12,8 @@
  *
  * Return: Always 0 (Success).
  */
-int main(int argc, char **argv, char **envp)
+/*int main(int argc, char **argv, char **envp)*/
+
 {
 	char buffer[1024];
 	/**size_t command_length = 0; */
