@@ -5,10 +5,10 @@ CC = gcc
 CFLAGS = -Wall -Werror -Wextra -pedantic -std=gnu89
 
 # Target executable
-TARGET = hsh
+TARGET = shell
 
 # Source files
-SRC = simple_shell.c other_file.c another_file.c
+SRC = simple_shell.c exec.c prompt.c
 
 # Object files
 OBJ = $(SRC:.c=.o)
@@ -18,7 +18,7 @@ all: $(TARGET)
 
 # Link the target executable
 $(TARGET): $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) -o $(TARGET)
+	$(CC) $(CFLAGS) -o $@ $(OBJ)
 
 # Compile source files into object files
 %.o: %.c
