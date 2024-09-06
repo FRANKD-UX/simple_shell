@@ -1,8 +1,8 @@
 #include "main.h"
-#include <sys/stat.h>
-#include <unistd.h>
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
 
 /**
  * execute_command - Execute a command.
@@ -10,14 +10,7 @@
  */
 void execute_command(char *cmd)
 {
-	struct stat st;
 	char *args[2];
-
-	if (stat(cmd, &st) == -1)
-	{
-		perror(cmd);
-		exit(EXIT_FAILURE);
-	}
 
 	args[0] = cmd;
 	args[1] = NULL;
