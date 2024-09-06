@@ -14,7 +14,7 @@
 int main(int argc, char **argv, char **envp)
 {
 	char buffer[1024];
-	size_t command_length = 0;
+	/**size_t command_length = 0; */
 
 	(void)argc; /* unused parameter */
 	(void)argv; /* unused parameter */
