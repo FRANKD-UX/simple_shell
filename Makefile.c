@@ -4,12 +4,9 @@ TARGET = simple_shell
 
 all: $(TARGET)
 
-$(TARGET): simple_shell.c
-    $(CC) $(CFLAGS) -o $(TARGET) simple_shell.c
+$(TARGET): simple_shell..o
+	$(CC) $(CFLAGS) -o $(TARGET) simple_shell.o
 
 clean:
-    rm -f $(TARGET)
-
-.PHONY: all clean
-
+	rm -f $(TARGET) *.o
 
