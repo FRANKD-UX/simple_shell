@@ -2,81 +2,19 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <sys/types.h>
 #include <sys/wait.h>
-#include <errno.h>
 
 #define BUFFER_SIZE 1024
-#define PROMPT "#cisfun$ "
-
-void handle_input(char *input);
-void remove_newline(char *input);
-void execute_command(char *input);
 
 /**
- * main - Entry point for the simple shell
- * Return: Always 0 (Success)
+ * handle_command - Handles the execution of a command
+ * @buffer: The command to be executed
  */
-int main(void)
-{
-	char *input = NULL;
-	size_t len = 0;
-	ssize_t nread;
-
-	while (1)
-	{
-		write(STDOUT_FILENO, PROMPT, strlen(PROMPT));
-		nread = getline(&input, &len, stdin);
-
-		if (nread == -1) /* Handle EOF */
-		{
-			if (feof(stdin))
-			{
-				free(input);
-				write(STDOUT_FILENO, "\n", 1);
-				exit(EXIT_SUCCESS);
-			}
-			perror("getline");
-			exit(EXIT_FAILURE);
-		}
-
-		handle_input(input);
-	}
-
-	free(input);
-	return (0);
-}
-
-/**
- * handle_input - Processes the user input
- * @input: User input string
- */
-void handle_input(char *input)
-{
-	remove_newline(input);
-	execute_command(input);
-}
-
-/**
- * remove_newline - Removes newline character from input
- * @input: User input string
- */
-void remove_newline(char *input)
-{
-	size_t len = strlen(input);
-
-	if (input[len - 1] == '\n')
-		input[len - 1] = '\0';
-}
-
-/**
- * execute_command - Forks and executes the command
- * @input: Command to execute
- */
-void execute_command(char *input)
+void handle_command(char *buffer)
 {
 	pid_t pid;
 	int status;
-	char *args[] = {NULL}; /* args is an array of pointers to command arguments */
 
 	pid = fork();
 	if (pid == -1)
@@ -84,15 +22,71 @@ void execute_command(char *input)
 		perror("fork");
 		exit(EXIT_FAILURE);
 	}
-	else if (pid == 0) /* Child process */
+
+	if (pid == 0)
 	{
-		execve(input, args, NULL);
-		perror(input);
+		execlp(buffer, buffer, (char *)NULL);
+		perror(buffer);
 		exit(EXIT_FAILURE);
 	}
-	else /* Parent process */
+	else
 	{
 		waitpid(pid, &status, 0);
 	}
+}
+
+/**
+ * read_input - Displays the prompt and reads user input
+ * @buffer: Pointer to buffer to store the input
+ * @bufsize: Size of the buffer
+ * Return: 0 on success, -1 on failure
+ */
+int read_input(char **buffer, size_t *bufsize)
+{
+	ssize_t bytes_read;
+
+	write(STDOUT_FILENO, "#cisfun$ ", 9);
+
+	bytes_read = getline(buffer, bufsize, stdin);
+
+	if (bytes_read == -1)
+	{
+		if (feof(stdin))
+		{
+			write(STDOUT_FILENO, "\n", 1);
+			return (-1);
+		}
+		perror("getline");
+		return (-1);
+	}
+
+	if ((*buffer)[bytes_read - 1] == '\n')
+		(*buffer)[bytes_read - 1] = '\0';
+
+	return (0);
+}
+
+/**
+ * main - Entry point of the shell
+ * Return: Always 0 (Success)
+ */
+int main(void)
+{
+	char *buffer = NULL;
+	size_t bufsize = 0;
+
+	while (1)
+	{
+		if (read_input(&buffer, &bufsize) == -1)
+		{
+			free(buffer);
+			exit(EXIT_FAILURE);
+		}
+
+		handle_command(buffer);
+	}
+
+	free(buffer);
+	return (0);
 }
 
