@@ -5,22 +5,18 @@
 #include <unistd.h>
 
 /**
- * main - Entry point of the shell.
- * @argc: Argument count.
- * @argv: Argument vector.
- * @envp: Environment variables.
+ * execute_command - Entry point of the shell.
+ * @command: Argument count.
  *
  * Return: Always 0 (Success).
  */
 /*int main(int argc, char **argv, char **envp)*/
-
+void execute_command(char *command)
 {
 	char buffer[1024];
 	/**size_t command_length = 0; */
 
-	(void)argc; /* unused parameter */
-	(void)argv; /* unused parameter */
-	(void)envp; /* unused parameter */
+	(void)command;/*Unused paramenet*/
 
 	/* Print a prompt */
 	printf("$ ");
@@ -32,7 +28,7 @@
 			buffer[strlen(buffer) - 1] = '\0';
 		}
 
-		/* Execute the command */
+	/* Execute the command */
 		execute_command(buffer);
 	}
 	else
