@@ -13,7 +13,7 @@
 #include <sys/wait.h>
 
 /* Function prototypes */
-void prompt(void);
+/*void prompt(void);*/
 void add_to_history(char *cmd);
 void print_history(void);
 int handle_builtin_commands(char *cmd, char **args);
