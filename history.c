@@ -1,5 +1,3 @@
-#include "shell.h"
-
 /**
  * add_to_history - Adds a command to the history list.
  * @cmd: The command to add.
