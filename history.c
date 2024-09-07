@@ -6,7 +6,7 @@
  */
 void add_to_history(char *cmd)
 {
-	/* Implementation goes here */
+	(void)cmd;/* Mark cmd as unused to supress warning  */
 }
 
 /**
