@@ -9,6 +9,8 @@
  */
 int handle_builtin_commands(char *cmd, char **args)
 {
+	(void)args;
+
 	if (strcmp(cmd, "exit") == 0)
 	{
 		exit(0);
