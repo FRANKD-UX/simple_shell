@@ -1,34 +1,24 @@
-# Makefile for simple shell project
-
-# Compiler
 CC = gcc
-
-# Compiler flags
 CFLAGS = -Wall -Werror -Wextra -pedantic -std=gnu89
+OBJ = simple_shell.o history.o builtin.o execute.o
 
-# Executable name
-TARGET = hsh
+all: simple_shell
 
-# Source files
-SRCS = simple_shell.c
+simple_shell: $(OBJ)
+	$(CC) $(CFLAGS) -o simple_shell $(OBJ)
 
-# Header files
-HEADERS = main.h
+simple_shell.o: simple_shell.c shell.h
+	$(CC) $(CFLAGS) -c simple_shell.c
 
-# Rule to build the executable
-$(TARGET): $(SRCS) $(HEADERS)
-	$(CC) $(CFLAGS) $(SRCS) -o $(TARGET)
+history.o: history.c shell.h
+	$(CC) $(CFLAGS) -c history.c
 
-# Rule to clean build files
+builtin.o: builtin.c shell.h
+	$(CC) $(CFLAGS) -c builtin.c
+
+execute.o: execute.c shell.h
+	$(CC) $(CFLAGS) -c execute.c
+
 clean:
-	rm -f $(TARGET)
-
-# Rule to remove all generated files
-fclean: clean
-	rm -f $(TARGET)
-
-# Rule to rebuild everything
-re: fclean $(TARGET)
-
-.PHONY: clean fclean re
+	rm -f *.o simple_shell
 

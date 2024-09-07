@@ -1,56 +1,35 @@
-#include "main.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
+#include "shell.h"
 
 /**
- * execute_command - Executes a command from the user input
- * @command: The command to execute
- */
-void execute_command(char *command)
-{
-	if (command == NULL)
-	{
-		return;
-	}
-	/* Placeholder for command execution logic */
-	printf("Executing command: %s\n", command);
-	/* Add actual implementation here */
-}
-
-/**
- * main - Entry point for the simple shell program
+ * main - Entry point for the shell.
+ * @argc: Argument count.
+ * @argv: Argument vector.
  *
- * Return: Always 0 (Success)
+ * Return: 0 on success.
  */
-int main(void)
+int main(int argc, char **argv)
 {
-	char *buffer = NULL;
-	size_t bufsize = 0;
-	ssize_t bytes_read;
+	char *line = NULL;
+	size_t len = 0;
+	ssize_t read;
+
+	(void)argc;
+	(void)argv;
 
 	while (1)
 	{
-		printf("#cisfun$ ");
-		fflush(stdout);
-
-		bytes_read = getline(&buffer, &bufsize, stdin);
-		if (bytes_read == -1)
+		prompt();
+		read = getline(&line, &len, stdin);
+		if (read == -1)
 		{
 			perror("getline");
 			exit(EXIT_FAILURE);
 		}
-
-		if (buffer[bytes_read - 1] == '\n')
-		{
-			buffer[bytes_read - 1] = '\0';
-		}
-
-		execute_command(buffer);
+		line[read - 1] = '\0'; /* Remove newline character */
+		parse_and_execute(line);
 	}
 
-	free(buffer);
+	free(line);
 	return (0);
 }
 
