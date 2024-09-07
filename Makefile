@@ -1,33 +1,34 @@
-# Define the compiler
+# Makefile for simple shell project
+
+# Compiler
 CC = gcc
 
 # Compiler flags
 CFLAGS = -Wall -Werror -Wextra -pedantic -std=gnu89
 
-# Target executable
-TARGET = shell
+# Executable name
+TARGET = hsh
 
 # Source files
-SRC = simple_shell.c exec.c prompt.c
+SRCS = simple_shell.c
 
-# Object files
-OBJ = $(SRC:.c=.o)
+# Header files
+HEADERS = main.h
 
-# Default rule
-all: $(TARGET)
+# Rule to build the executable
+$(TARGET): $(SRCS) $(HEADERS)
+	$(CC) $(CFLAGS) $(SRCS) -o $(TARGET)
 
-# Link the target executable
-$(TARGET): $(OBJ)
-	$(CC) $(CFLAGS) -o $@ $(OBJ)
-
-# Compile source files into object files
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
-
-# Clean rule
+# Rule to clean build files
 clean:
-	rm -f $(OBJ) $(TARGET)
+	rm -f $(TARGET)
 
-# Phony targets
-.PHONY: all clean
+# Rule to remove all generated files
+fclean: clean
+	rm -f $(TARGET)
+
+# Rule to rebuild everything
+re: fclean $(TARGET)
+
+.PHONY: clean fclean re
 

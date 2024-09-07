@@ -1,7 +1,10 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-void execute_command(char *cmd);
+#include <stddef.h>
+
+/* Function prototypes */
+void execute_command(char *command);
 
 #endif /* MAIN_H */
 
