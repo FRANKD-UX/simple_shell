@@ -8,7 +8,8 @@
  */
 void parse_and_execute(char *input)
 {
-    /* Parse input and execute the command */
+	(void)input;
+
 	/** printf("Executing command: %s\n", input); */
 }
 
