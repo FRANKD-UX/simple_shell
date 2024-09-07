@@ -19,7 +19,7 @@ int main(int argc, char **argv)
 
 	while (1)
 	{
-		/*prompt();*/
+		prompt();
 		read = getline(&line, &len, stdin);
 		if (read == -1)
 		{

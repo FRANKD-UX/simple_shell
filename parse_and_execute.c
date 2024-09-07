@@ -9,6 +9,6 @@
 void parse_and_execute(char *input)
 {
     /* Parse input and execute the command */
-	printf("Executing command: %s\n", input);
+	/** printf("Executing command: %s\n", input); */
 }
 
