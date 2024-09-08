@@ -9,6 +9,8 @@
 #include <sys/wait.h>
 
 /* Function prototypes */
+char *read_command(void);
+char **parse_command(char *line);
 void prompt(void);
 void add_to_history(char *cmd);
 void print_history(void);
