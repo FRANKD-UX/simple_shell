@@ -5,37 +5,6 @@ void handle_command(char *command);
 char *read_command(void);
 
 /**
- * main - Entry point of the shell
- *
- * Return: Always 0 (Success)
- */
-int main(void)
-{
-	char *command;
-
-	while (1)
-	{
-		prompt(); /* Display the shell prompt */
-
-		/* Read the command from the user */
-		command = read_command();
-		if (command == NULL)
-		{
-			/* Handle errors or end of file */
-			continue;
-		}
-
-		/* Process the command */
-		handle_command(command);
-
-		/* Free the memory allocated for the command */
-		free(command);
-	}
-
-	return (0);
-}
-
-/**
  * handle_command - Handles the execution of the command
  * @command: The command to execute
  */
