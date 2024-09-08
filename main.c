@@ -44,32 +44,3 @@ void handle_command(char *command)
 		wait(&status);
 	}
 }
-
-/**
- * read_command - Reads a command from the user
- *
- * Return: A dynamically allocated string containing the command
- */
-char *read_command(void)
-{
-	char *command = NULL;
-	size_t bufsize = 0;
-
-	if (getline(&command, &bufsize, stdin) == -1)
-	{
-		/* Handle EOF (Ctrl+D) */
-		if (feof(stdin))
-		{
-			free(command);
-			exit(0);  /* Exit shell if Ctrl+D is pressed */
-		}
-		else
-		{
-			perror("getline");  /* Handle other errors */
-			return (NULL);
-		}
-	}
-
-	return (command);
-}
-
