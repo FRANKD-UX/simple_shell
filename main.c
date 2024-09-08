@@ -27,7 +27,7 @@ void handle_command(char *command)
 	argv[0] = command;
 	argv[1] = NULL;
 
-	pid = fork(); /* Fork a new process */
+	pid = fork();  /* Fork a new process */
 
 	if (pid == -1)
 	{
@@ -61,11 +61,11 @@ char *read_command(void)
 		if (feof(stdin))
 		{
 			free(command);
-			exit(0); /* Exit shell if Ctrl+D is pressed */
+			exit(0);  /* Exit shell if Ctrl+D is pressed */
 		}
 		else
 		{
-			perror("getline"); /* Handle other errors */
+			perror("getline");  /* Handle other errors */
 			return (NULL);
 		}
 	}
