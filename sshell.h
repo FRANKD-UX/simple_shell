@@ -86,7 +86,7 @@ int find_program(p_data *data);
 /* helpers_f.c */
 void free_array_of_pointers(char **directories);
 void free_recurrent_data(p_data *data);
-void free_all_data(p_data *data);
+void free_data(p_data *data);
 
 /* builtins_m.c */
 
@@ -122,7 +122,7 @@ void str_reverse(char *string);
 
 /*helpers_p.c */
 int _print(char *string);
-int _printe(char *string);
+int _print1(char *string);
 int _print_error(int errorcode, p_data *data);
 
 

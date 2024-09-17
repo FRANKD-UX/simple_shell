@@ -78,10 +78,8 @@ char **tokenize_path(p_data *data)
 			counter_directories++;
 	}
 
-	/* reserve space for the array of pointers */
 	tokens = malloc(sizeof(char *) * counter_directories);
 
-	/*tokenize and duplicate each token of path*/
 	x = 0;
 	tokens[x] = str_duplicate(_strtok(PATH, ":"));
 	while (tokens[x++])

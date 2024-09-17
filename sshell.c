@@ -63,10 +63,10 @@ void initialize_data(p_data *data, int argc, char *argv[], char **env)
 		data->file_descriptor = open(argv[1], O_RDONLY);
 		if (data->file_descriptor == -1)
 		{
-			_printe(data->program_name);
-			_printe(": 0: Can't open ");
-			_printe(argv[1]);
-			_printe("\n");
+			_print1(data->program_name);
+			_print1(": 0: Can't open ");
+			_print1(argv[1]);
+			_print1("\n");
 			exit(127);
 		}
 	}
@@ -105,7 +105,7 @@ void sisifo(char *prompt, p_data *data)
 
 		if (error_code == EOF)
 		{
-			free_all_data(data);
+			free_data(data);
 			exit(errno);
 		}
 		if (string_len >= 1)
