@@ -1,4 +1,4 @@
-#include "sshell.h"
+#include "shell.h"
 
 /**
  * main - initialize the variables of the program
