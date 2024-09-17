@@ -2,7 +2,7 @@
 #define HELPERS_H
 
 /*What will be printed */
-#define PROMPT_MSG "Welcome"
+#define PROMPT_MSG "Enter Command:"
 #define UNUSED __attribute__((unused))
 #define BUFFER_SIZE 1024
 
