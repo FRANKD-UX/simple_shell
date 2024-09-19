@@ -11,6 +11,7 @@
 
 /**
  * main - Entry point of the shell program
+ * @argc: Argument count
  * @argv: Argument vector
  *
  * Return: 0 on success, or an error code on failure
@@ -19,10 +20,13 @@ int main(int argc, char *argv[])
 {
 	(void)argc; /* Suppress unused parameter warning */
 	char buffer[BUFFER_SIZE];
+	int status;
+	pid_t pid;
 
 	while (1)
 	{
 		printf(PROMPT);
+
 		if (fgets(buffer, BUFFER_SIZE, stdin) == NULL)
 		{
 			if (feof(stdin))
@@ -39,7 +43,27 @@ int main(int argc, char *argv[])
 		if (strcmp(buffer, "exit") == 0)
 			break;
 
-		execute_command(buffer, argv);
+		pid = fork();
+		if (pid == -1)
+		{
+			perror("fork");
+			continue;
+		}
+		else if (pid == 0)
+		{
+			/* Child process */
+			char *args[] = {buffer, NULL};
+			if (execve(args[0], args, environ) == -1)
+			{
+				perror(argv[0]);
+			}
+			exit(EXIT_FAILURE);
+		}
+		else
+		{
+			/* Parent process */
+			wait(&status);
+		}
 	}
 
 	return (0);
