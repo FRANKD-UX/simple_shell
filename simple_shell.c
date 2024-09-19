@@ -4,16 +4,21 @@
 #include <string.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include "simple_shell.h"
 
 #define BUFFER_SIZE 1024
 #define PROMPT "#cisfun$ "
 
+/**
+ * main - Entry point of the shell program
+ * @argv: Argument vector
+ *
+ * Return: 0 on success, or an error code on failure
+ */
 int main(int argc, char *argv[])
 {
+	(void)argc; /* Suppress unused parameter warning */
 	char buffer[BUFFER_SIZE];
-	char *args[2];
-	int status;
-	pid_t pid;
 
 	while (1)
 	{
@@ -34,31 +39,45 @@ int main(int argc, char *argv[])
 		if (strcmp(buffer, "exit") == 0)
 			break;
 
-		args[0] = buffer;
-		args[1] = NULL;
-
-		pid = fork();
-		if (pid == -1)
-		{
-			perror("fork");
-			continue;
-		}
-		else if (pid == 0)
-		{
-			/* Child process */
-			if (execve(args[0], args, environ) == -1)
-			{
-				perror(argv[0]);
-			}
-			exit(EXIT_FAILURE);
-		}
-		else
-		{
-			/* Parent process */
-			wait(&status);
-		}
+		execute_command(buffer, argv);
 	}
 
 	return (0);
+}
+
+/**
+ * execute_command - Executes a command
+ * @command: The command to execute
+ * @argv: Argument vector
+ */
+void execute_command(char *command, char *argv[])
+{
+	char *args[2];
+	int status;
+	pid_t pid;
+
+	args[0] = command;
+	args[1] = NULL;
+
+	pid = fork();
+	if (pid == -1)
+	{
+		perror("fork");
+		return;
+	}
+	else if (pid == 0)
+	{
+		/* Child process */
+		if (execve(args[0], args, environ) == -1)
+		{
+			perror(argv[0]);
+		}
+		exit(EXIT_FAILURE);
+	}
+	else
+	{
+		/* Parent process */
+		wait(&status);
+	}
 }
 
