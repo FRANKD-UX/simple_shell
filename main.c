@@ -1,4 +1,5 @@
 #include "shell.h"
+#include <stdlib.h> /* Include this for free() */
 #include <stdio.h>
 #include <unistd.h>
 
@@ -34,7 +35,7 @@ void run_interactive_mode(void)
 		printf("$ ");
 		if (getline(&line, &len, stdin) == -1)
 		{
-			free(line);
+			free(line); /* Free allocated memory */
 			break;
 		}
 		execute_command(line);
@@ -67,7 +68,6 @@ void run_non_interactive_mode(const char *script_path)
 	while (getline(&line, &len, file) != -1)
 		execute_command(line);
 
-	free(line);
+	free(line); /* Free allocated memory */
 	fclose(file);
 }
-
