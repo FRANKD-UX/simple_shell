@@ -1,21 +1,34 @@
+#define _POSIX_C_SOURCE 200809L /* Enable POSIX features like getline */
 #include "shell.h"
+#include <stdlib.h>
+#include <stdio.h>
 
 /**
- * main - Non-interactive script entry point
- * @argc: Argument count
- * @argv: Argument vector
- *
- * Return: 0 on success
+ * run_non_interactive_mode - Handles shell in non-interactive mode
+ * @script_path: Path to script file
  */
-int main(int argc, char **argv)
+void run_non_interactive_mode(const char *script_path)
 {
-	if (argc > 1)
-		run_non_interactive_mode(argv[1]);
-	else
+	FILE *file;
+	char *line = NULL;
+	size_t len = 0;
+
+	if (!script_path)
 	{
-		fprintf(stderr, "Usage: %s <script_file>\n", argv[0]);
-		return (1);
+		fprintf(stderr, "Error: No script file provided.\n");
+		return;
 	}
 
-	return (0);
+	file = fopen(script_path, "r");
+	if (!file)
+	{
+		perror("Error opening file");
+		return;
+	}
+
+	while (getline(&line, &len, file) != -1)
+		execute_command(line);
+
+	free(line); /* Free allocated memory */
+	fclose(file);
 }
