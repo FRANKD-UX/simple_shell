@@ -1,9 +1,15 @@
 #ifndef SHELL_H
 #define SHELL_H
 
-void run_interactive_mode(void);
-void run_non_interactive_mode(const char *script_path);
-void execute_command(char *command);
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/wait.h>
+
+void execute_command(const char *command);
+char **tokenize(const char *input);
+int handle_builtin(char **args);
+void free_tokens(char **tokens);
 
 #endif /* SHELL_H */
 
