@@ -1,26 +1,37 @@
 #include "shell.h"
+#include <stdlib.h>
 
 /**
- * process_command - Processes a given command line
- * @line: The command line input
+ * execute_command - Executes a shell command
+ * @command: Command to execute
  */
-void process_command(char *line)
+void execute_command(const char *command)
 {
 	char **args;
+	pid_t pid;
 
-	args = tokenize_input(line); /* Use the correct tokenizer function */
+	args = tokenize(command);
 	if (args == NULL)
 		return;
 
-	/* Example: Execute command or handle built-ins */
-	if (strcmp(args[0], "exit") == 0)
-		handle_exit(args);
-	else if (strcmp(args[0], "cd") == 0)
-		handle_cd(args);
-	else if (strcmp(args[0], "env") == 0)
-		handle_env();
-	else
-		execve(args[0], args, environ);
+	if (!handle_builtin(args))
+	{
+		pid = fork();
+		if (pid == 0)
+		{
+			if (execvp(args[0], args) == -1)
+				perror("Error executing command");
+			exit(EXIT_FAILURE);
+		}
+		else if (pid < 0)
+		{
+			perror("Error forking");
+		}
+		else
+		{
+			wait(NULL);
+		}
+	}
 
 	free_tokens(args);
 }

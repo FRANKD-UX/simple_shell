@@ -1,47 +1,42 @@
 #include "shell.h"
+#include <stdlib.h>
+#include <string.h>
 
 /**
- * tokenize_input - Tokenizes a string into an array of arguments
- * @input: The input string
+ * tokenize - Splits a string into tokens
+ * @line: Input string
  *
- * Return: Array of tokens or NULL on failure
+ * Return: Array of tokens
  */
-char **tokenize_input(const char *input)
+char **tokenize(const char *line)
 {
 	char **tokens = NULL;
-	char *token, *input_copy;
-	size_t i = 0, num_tokens = 0;
+	char *token, *line_copy;
+	size_t count = 0;
 
-	if (input == NULL)
+	if (!line)
 		return (NULL);
 
-	input_copy = strdup(input);
-	if (input_copy == NULL)
+	line_copy = strdup(line);
+	if (!line_copy)
 		return (NULL);
 
-	/* Count tokens */
-	token = strtok(input_copy, " \t\n");
+	token = strtok(line_copy, " \t\n");
 	while (token)
 	{
-		num_tokens++;
+		tokens = realloc(tokens, sizeof(char *) * (count + 2));
+		if (!tokens)
+		{
+			free(line_copy);
+			return (NULL);
+		}
+		tokens[count] = strdup(token);
+		count++;
 		token = strtok(NULL, " \t\n");
 	}
+	if (tokens)
+		tokens[count] = NULL;
 
-	free(input_copy);
-
-	/* Allocate memory for tokens */
-	tokens = malloc((num_tokens + 1) * sizeof(char *));
-	if (tokens == NULL)
-		return (NULL);
-
-	/* Tokenize the input */
-	token = strtok(strdup(input), " \t\n");
-	while (token)
-	{
-		tokens[i++] = strdup(token);
-		token = strtok(NULL, " \t\n");
-	}
-	tokens[i] = NULL;
-
+	free(line_copy);
 	return (tokens);
 }

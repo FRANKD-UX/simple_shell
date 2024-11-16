@@ -1,42 +1,24 @@
 #include "shell.h"
+#include <string.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 /**
- * handle_exit - Exits the shell with the specified status.
- * @args: The arguments passed to the exit command.
+ * handle_builtin - Handles built-in commands like exit
+ * @args: Parsed command arguments
+ *
+ * Return: 1 if a built-in was executed, 0 otherwise
  */
-void handle_exit(char **args)
+int handle_builtin(char **args)
 {
-	if (args[1])
-		exit(atoi(args[1])); /* Exit with specified status */
-	else
-		exit(0); /* Default exit status */
-}
+	if (args[0] == NULL)
+		return (0);
 
-/**
- * handle_cd - Changes the current working directory.
- * @args: The arguments passed to the cd command.
- */
-void handle_cd(char **args)
-{
-	if (!args[1])
+	if (strcmp(args[0], "exit") == 0)
 	{
-		fprintf(stderr, "cd: missing argument\n");
-		return;
+		free_tokens(args);
+		exit(0);
 	}
-	if (chdir(args[1]) != 0)
-		perror("cd");
-}
 
-/**
- * handle_env - Prints the environment variables.
- */
-void handle_env(void)
-{
-	char **env = environ;
-
-	while (*env)
-	{
-		printf("%s\n", *env);
-		env++;
-	}
+	return (0);
 }
