@@ -1,41 +1,37 @@
 #include "shell.h"
+#include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 
 /**
- * execute_command - Executes a shell command
+ * execute_command - Executes a command
  * @command: Command to execute
  */
-void execute_command(char *command)
+void execute_command(const char *command)
 {
+	char **args;
 	pid_t pid;
-	int status;
-	char *argv[] = {"/bin/sh", "-c", command, NULL};
 
-	if (!command || *command == '\n')
-		return; /* Skip empty commands */
+	args = tokenize(command);
+	if (!args)
+		return;
 
-	pid = fork(); /* Create child process */
-	if (pid == 0)
+	if (!handle_builtin(args))
 	{
-		/* Child process */
-		if (execve(argv[0], argv, NULL) == -1)
+		pid = fork();
+		if (pid == 0)
 		{
-			perror("Error executing command");
+			if (execvp(args[0], args) == -1)
+				perror("Error executing command");
 			exit(EXIT_FAILURE);
 		}
+		else if (pid > 0)
+			wait(NULL);
+		else
+			perror("Error forking process");
 	}
-	else if (pid < 0)
-	{
-		perror("Error forking");
-	}
-	else
-	{
-		/* Parent process waits for child to finish */
-		waitpid(pid, &status, 0);
-	}
+	free_tokens(args);
 }
 
