@@ -1,42 +1,54 @@
 #include "shell.h"
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 /**
- * tokenize - Splits a string into tokens
- * @line: Input string
+ * tokenize - Splits a command string into tokens
+ * @command: Command string
  *
  * Return: Array of tokens
  */
-char **tokenize(const char *line)
+char **tokenize(const char *command)
 {
 	char **tokens = NULL;
-	char *token, *line_copy;
+	char *token, *command_copy;
 	size_t count = 0;
 
-	if (!line)
+	command_copy = strdup(command);
+	if (!command_copy)
 		return (NULL);
 
-	line_copy = strdup(line);
-	if (!line_copy)
-		return (NULL);
-
-	token = strtok(line_copy, " \t\n");
+	token = strtok(command_copy, " \t\n");
 	while (token)
 	{
 		tokens = realloc(tokens, sizeof(char *) * (count + 2));
 		if (!tokens)
 		{
-			free(line_copy);
+			free(command_copy);
 			return (NULL);
 		}
-		tokens[count] = strdup(token);
-		count++;
+		tokens[count++] = strdup(token);
 		token = strtok(NULL, " \t\n");
 	}
-	if (tokens)
-		tokens[count] = NULL;
-
-	free(line_copy);
+	tokens[count] = NULL;
+	free(command_copy);
 	return (tokens);
 }
+
+/**
+ * free_tokens - Frees a tokenized array
+ * @tokens: Array of tokens to free
+ */
+void free_tokens(char **tokens)
+{
+	size_t i;
+
+	if (!tokens)
+		return;
+
+	for (i = 0; tokens[i]; i++)
+		free(tokens[i]);
+	free(tokens);
+}
+
