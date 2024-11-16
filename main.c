@@ -7,14 +7,17 @@
  * @argc: Argument count
  * @argv: Argument vector
  *
- * Return: 0 on success, or appropriate error code
+ * Return: Always 0
  */
 int main(int argc, char **argv)
 {
-	if (isatty(STDIN_FILENO)) /* Check if running in interactive mode */
+	(void)argc;
+
+	if (isatty(STDIN_FILENO))
 		run_interactive_mode();
-	else /* Otherwise, run in non-interactive mode */
-		run_non_interactive_mode();
+	else
+		run_non_interactive_mode(argv[1]);
+
 	return (0);
 }
 
@@ -25,62 +28,46 @@ void run_interactive_mode(void)
 {
 	char *line = NULL;
 	size_t len = 0;
-	ssize_t nread;
 
 	while (1)
 	{
-		write(STDOUT_FILENO, "($) ", 4); /* Display prompt */
-		nread = getline(&line, &len, stdin); /* Read user input */
-		if (nread == -1) /* End of input (Ctrl+D) */
+		printf("$ ");
+		if (getline(&line, &len, stdin) == -1)
 		{
 			free(line);
 			break;
 		}
-
-		execute_command(line); /* Process the command */
+		execute_command(line);
 	}
-
-	free(line);
 }
 
 /**
  * run_non_interactive_mode - Handles shell in non-interactive mode
+ * @script_path: Path to script file
  */
-void run_non_interactive_mode(void)
+void run_non_interactive_mode(const char *script_path)
 {
-	/*char *line = NULL;
+	FILE *file;
+	char *line = NULL;
 	size_t len = 0;
-	ssize_t nread;
 
-	while ((nread = getline(&line, &len, stdin)) != -1)
-		execute_command(line); /* Process each line of input */
+	if (!script_path)
+	{
+		fprintf(stderr, "Error: No script file provided.\n");
+		return;
+	}
+
+	file = fopen(script_path, "r");
+	if (!file)
+	{
+		perror("Error opening file");
+		return;
+	}
+
+	while (getline(&line, &len, file) != -1)
+		execute_command(line);
 
 	free(line);
+	fclose(file);
 }
 
-/**
- * execute_command - Parses and executes a shell command
- * @command: Command to execute
- */
-void execute_command(char *command)
-{
-	pid_t pid;
-	int status;
-	char *args[2];
-
-	/* For simplicity, assuming the command has no arguments */
-	args[0] = command;
-	args[1] = NULL;
-
-	pid = fork(); /* Create a new process */
-	if (pid == 0) /* Child process */
-	{
-		if (execve(command, args, NULL) == -1)
-			perror("./hsh");
-		_exit(EXIT_FAILURE);
-	}
-	else if (pid > 0) /* Parent process */
-		wait(&status); /* Wait for child to finish */
-	else
-		perror("fork");
-}
