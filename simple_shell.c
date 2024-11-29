@@ -7,6 +7,29 @@
 #define PROMPT "#cisfun$ "
 
 /**
+ * handle_getline_error - Handles potential errors from getline.
+ * @read: The return value from getline.
+ *
+ * Return: Void.
+ */
+void handle_getline_error(ssize_t read)
+{
+	if (read == -1)
+	{
+		if (feof(stdin))
+		{
+			printf("\n");
+			exit(EXIT_SUCCESS);
+		}
+		else
+		{
+			perror("getline");
+			exit(EXIT_FAILURE);
+		}
+	}
+}
+
+/**
  * main - Entry point for the simple shell program.
  *
  * Return: Always 0.
@@ -19,30 +42,19 @@ int main(void)
 	char *command;
 	char *argv[] = {NULL, NULL};
 	int status;
+	pid_t pid;
 
 	while (1)
 	{
 		printf(PROMPT);
 		read = getline(&line, &len, stdin);
-		if (read == -1)
-		{
-			if (feof(stdin))
-			{
-				printf("\n");
-				break;
-			}
-			else
-			{
-				perror("getline");
-				exit(EXIT_FAILURE);
-			}
-		}
+		handle_getline_error(read);  /* Call the error handling function */
 
-		line[strcspn(line, "\n")] = '\0'; /* Remove trailing newline */
+		line[strcspn(line, "\n")] = '\0';
 		command = line;
 		argv[0] = command;
 
-		pid_t pid = fork();
+		pid = fork();
 
 		if (pid == -1)
 		{
@@ -51,7 +63,6 @@ int main(void)
 		}
 		else if (pid == 0)
 		{
-			/* Child process */
 			if (execve(command, argv, environ) == -1)
 			{
 				fprintf(stderr, "%s: No such file or directory\n", command);
@@ -60,7 +71,6 @@ int main(void)
 		}
 		else
 		{
-			/* Parent process */
 			wait(&status);
 		}
 	}
