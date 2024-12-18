@@ -6,9 +6,9 @@ char *read_command(void);
 void execute_command(char *line);
 
 /**
- * main - Entry point for the simple shell
+ * main - Entry point for the simple shell program.
  *
- * Return: 0 on success, or an appropriate error code
+ * Return: Always 0 (Success).
  */
 int main(void)
 {
@@ -16,18 +16,20 @@ int main(void)
 
 	while (1)
 	{
-		/* Display prompt */
 		if (isatty(STDIN_FILENO))
-			display_prompt();
+			display_prompt(); /* Display prompt in interactive mode */
 
-		/* Read input from user */
-		line = read_command();
+		line = read_command(); /* Read user input */
 		if (!line) /* Handle EOF (Ctrl+D) */
-			break;
+			exit(EXIT_SUCCESS);
 
-		/* Execute the command */
-		execute_command(line);
+		if (_strcmp(line, "exit") == 0) /* Exit command */
+		{
+			free(line);
+			exit(EXIT_SUCCESS);
+		}
 
+		execute_command(line); /* Execute the command */
 		free(line);
 	}
 
@@ -35,7 +37,7 @@ int main(void)
 }
 
 /**
- * display_prompt - Displays the shell prompt
+ * display_prompt - Displays the shell prompt.
  */
 void display_prompt(void)
 {
@@ -43,9 +45,9 @@ void display_prompt(void)
 }
 
 /**
- * read_command - Reads a command from standard input
+ * read_command - Reads a command from standard input.
  *
- * Return: Pointer to the command string, or NULL on EOF
+ * Return: The command string (dynamically allocated).
  */
 char *read_command(void)
 {
@@ -57,43 +59,42 @@ char *read_command(void)
 	if (nread == -1) /* Handle EOF */
 	{
 		free(line);
-		if (isatty(STDIN_FILENO))
-			write(STDOUT_FILENO, "\n", 1);
 		return (NULL);
 	}
 
-	/* Remove trailing newline character */
-	line[nread - 1] = '\0';
+	/* Remove newline character */
+	if (line[nread - 1] == '\n')
+		line[nread - 1] = '\0';
+
 	return (line);
 }
 
 /**
- * execute_command - Forks a process and executes a command
- * @line: Command string
+ * execute_command - Forks and executes a command.
+ * @line: The command to execute.
  */
 void execute_command(char *line)
 {
 	pid_t pid;
 	int status;
-	char *argv[2];
+	char *args[2];
 
-	/* Prepare argv for execve */
-	argv[0] = line; /* Command */
-	argv[1] = NULL; /* Null-terminate the argument list */
+	args[0] = line; /* Assign the command to the first argument */
+	args[1] = NULL; /* Null-terminate the arguments array */
 
-	/* Fork a child process */
-	pid = fork();
+	pid = fork(); /* Create a child process */
+	if (pid == -1)
+	{
+		perror("Error");
+		exit(EXIT_FAILURE);
+	}
 	if (pid == 0) /* Child process */
 	{
-		if (execve(argv[0], argv, environ) == -1) /* Execute command */
+		if (execve(line, args, environ) == -1)
 		{
-			perror(argv[0]); /* Print error message */
+			perror("./hsh");
 			exit(EXIT_FAILURE);
 		}
-	}
-	else if (pid < 0) /* Fork error */
-	{
-		perror("fork");
 	}
 	else /* Parent process */
 	{
